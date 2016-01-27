@@ -1,0 +1,33 @@
+{% load staticfiles %}
+{% load render_table from django_tables2 %}
+
+<!DOCTYPE html>
+<html>
+<head>
+<script src="{% static "js/bootstrap.dataTables.js" %}"></script>
+        <link rel="stylesheet" href="{% static 'django_tables2/themes/paleblue/css/screen.css' %}"/>
+	<title>{{ request.user }}</title>
+
+</head>
+<body>
+{% if user.is_superuser %}
+<h1>Rango says... hello {{ request.user }} you are an admin!</h1>
+        <div class = 'row'>
+			<div class = 'col-md-4'>
+				{% render_table table %}
+			</div>	
+			<div class = 'col-md-4'>
+			</div>
+		{% else %}
+
+		<h1>Rango says... hello world! you are a user</h1>
+		{% render_table table %}
+		{% endif %}
+        
+
+</body>
+</html>>
+
+<body>
+        
+    </body>

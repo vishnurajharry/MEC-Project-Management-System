@@ -1,0 +1,21 @@
+<!-- {% extends "base.html" %} --> 
+{% load crispy_forms_tags %}
+
+<!-- {% block jumbotron %} -->
+{{title}}
+<div class = 'row'>
+<!-- <div class = "col-md-4">hai</div> -->
+<div class = 'col-md-4'></div>
+
+<div class = 'col-md-4'>
+<form method = "POST">{% csrf_token%}
+{{profileform|crispy}}
+{{userform|crispy}}
+<input type = "submit" value = "submit">
+</form>
+</div>
+</div>
+<!-- {% endblock %} -->
+
+<!-- <div class = 'col-md-6'>hhh</div>
+</div>
