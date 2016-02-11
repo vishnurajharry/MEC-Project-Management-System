@@ -10,6 +10,7 @@
 <div class = 'col-md-4'>
 <form method = "POST">{% csrf_token%}
 {{profileform|crispy}}
+{{memberform|crispy}}
 {{userform|crispy}}
 <input type = "submit" value = "submit">
 </form>

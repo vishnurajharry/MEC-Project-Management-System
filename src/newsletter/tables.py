@@ -14,3 +14,8 @@ class NotifTable(tables.Table):
 	class Meta:
 		model = notifications
 		attrs = {"class": "paleblue"}
+
+class sellerTable(tables.Table):
+	class Meta:
+		model = sellerprofile
+		attrs = {"class": "paleblue"}

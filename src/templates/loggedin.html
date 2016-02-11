@@ -1,33 +1,147 @@
 {% load staticfiles %}
+{% load crispy_forms_tags %}
 {% load render_table from django_tables2 %}
 
-<!DOCTYPE html>
 <html>
 <head>
 <script src="{% static "js/bootstrap.dataTables.js" %}"></script>
-        <link rel="stylesheet" href="{% static 'django_tables2/themes/paleblue/css/screen.css' %}"/>
-	<title>{{ request.user }}</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+
+<!-- Optional theme -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap-theme.min.css">
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="{% static 'django_tables2/themes/paleblue/css/screen.css' %}"/>
+<title>{{ request.user }}</title>
 
 </head>
 <body>
+
+</hr>
+</hr>
+{% if user.is_authenticated %}
+<div class = 'row'>
+<div class = 'col-md-10'>
+<h1>PMS welcomes..{{ request.user }} </h1></div>
+<div class = 'col-md-2'>
+<a href="/logout" class="btn btn-info btn-sm">
+          <span class="glyphicon glyphicon-log-out"></span> Log out
+        </a></div></div>
+
 {% if user.is_superuser %}
-<h1>Rango says... hello {{ request.user }} you are an admin!</h1>
         <div class = 'row'>
+            <div class = 'col-md-4'>
+            {% render_table table %}
+            </div>
+            <div class = 'col-md-2'>
+            </div>
 			<div class = 'col-md-4'>
-				{% render_table table %}
+			<form method = "POST">{% csrf_token%}
+				{{ form|crispy }}
+				<input type = "submit" value = "submit">
 			</div>	
-			<div class = 'col-md-4'>
 			</div>
+			<div class = 'row'>
+			
+
 		{% else %}
 
-		<h1>Rango says... hello world! you are a user</h1>
-		{% render_table table %}
+	
+		<div class = 'row'>
+            <div class = 'col-md-1'>
+            </div>
+			<div class = 'col-md-6'>
+			<h3>Private Notifications</h3>
+				{% render_table table %}
+			</div>	
+			<!-- <div class = 'col-md-4'>
+			</div> -->
+			<div class = 'col-md-5'>
+			<h3>Public Notifications</h3>
+				{% render_table table1 %}
+			</div>	
+			</div>
+
+
+
+
+<div class = 'row'>
+<div class = 'col-md-1'>
+</div>
+<div class = 'col-md-10'>
+<div class="container">
+{% if documents %} 
+  <h2>Group Details</h2>    
+       
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th>Document Url</th>
+      </tr>
+    </thead>
+    <tbody>
+    
+    {% for document in documents%}
+      <tr>
+        <td><li><a href="{{ document.docfile.url }}">{{ document.docfile.name }}</a></li></td>
+      </tr>
+      {%endfor%}
+      
+    </tbody>
+  </table>
+  {% endif %}
+</div>
+</div>
+{% endif %}
+
+
+
+
+
+
+
+			
+		    
+		{% else %}
+		<div class = 'row'>
+		<div class = 'col-md-1'>
+            </div>
+		you must login to continue</div>
+		<div class = 'row'><div class = 'col-md-1'>
+            </div><a href="/login" class="btn btn-info btn-sm">
+          <span class="glyphicon glyphicon-log-out"></span> Log in
+        </a></div>
 		{% endif %}
-        
+		
+
+		<form class="form-inline" role="form" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            
+            <p>{{ form.non_field_errors }}</p>
+            <p>{{ form.docfile.label_tag }} {{ form.docfile.help_text }}</p>
+            <div class="form-group">
+            <p>
+                {{ form.docfile.errors }}
+                {{ form.docfile }}
+            </p>
+            </div>
+            <div class="form-group">
+
+            <p><input type="submit" value="Upload" /></p></div>
+        </form>
 
 </body>
-</html>>
+</html>
 
-<body>
-        
-    </body>
+
+
+
+
+
+
+
+
+
+
+    
